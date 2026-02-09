@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -136,8 +137,8 @@ export default function HomePage() {
               { icon: Lock, title: 'Secure Escrow', description: 'Funds are locked in smart contract escrow' },
               { icon: CheckCircle, title: 'Get Paid', description: 'Instant payment upon work approval' },
             ].map((item, index, arr) => (
-              <>
-                <div key={item.title} className="text-center">
+              <React.Fragment key={item.title}>
+                <div className="text-center">
                   <div className="mb-4">
                     <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white mx-auto neon-glow">
                       <item.icon className="h-8 w-8" />
@@ -153,7 +154,7 @@ export default function HomePage() {
                     <ArrowRight className="h-10 w-10 text-primary-500" />
                   </div>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>
