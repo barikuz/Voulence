@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useSidebar } from '@/providers/sidebar-provider';
 
 const sidebarLinks = [
     {
@@ -50,14 +50,14 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
     const pathname = usePathname();
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const { isCollapsed, toggleSidebar } = useSidebar();
 
     return (
         <aside
             className={cn(
                 'fixed left-0 top-16 bottom-0 z-30',
                 'flex flex-col',
-                'glass border-r border-[rgb(var(--border))]',
+                'bg-[rgb(var(--card))] border-r border-[rgb(var(--border))]',
                 'transition-all duration-300',
                 isCollapsed ? 'w-20' : 'w-64',
                 className
@@ -65,8 +65,8 @@ export function Sidebar({ className }: SidebarProps) {
         >
             {/* Collapse Toggle */}
             <button
-                onClick={() => setIsCollapsed(!isCollapsed)}
-                className="absolute -right-3 top-6 h-6 w-6 rounded-full bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center hover:bg-primary-500/10 transition-colors"
+                onClick={toggleSidebar}
+                className="absolute -right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full bg-[rgb(var(--card))] border border-[rgb(var(--border))] flex items-center justify-center hover:bg-primary-500/10 transition-colors z-10"
                 aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
                 {isCollapsed ? (

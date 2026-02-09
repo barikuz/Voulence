@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
 
 const footerLinks = {
@@ -31,7 +34,24 @@ const socialLinks = [
     { name: 'Email', href: 'mailto:hello@voulence.com', icon: Mail },
 ];
 
-export function Footer() {
+// Dashboard routes that have their own footer in the layout
+const dashboardRoutes = ['/dashboard', '/transactions', '/disputes', '/profile'];
+
+interface FooterProps {
+    forceShow?: boolean;
+}
+
+export function Footer({ forceShow = false }: FooterProps) {
+    const pathname = usePathname();
+
+    // Hide this footer on dashboard routes (they have their own footer in the layout)
+    // unless forceShow is true (used when Footer is explicitly included in dashboard layout)
+    if (!forceShow) {
+        const isDashboardRoute = dashboardRoutes.some(route => pathname.startsWith(route));
+        if (isDashboardRoute) {
+            return null;
+        }
+    }
     return (
         <footer className="bg-[rgb(var(--card))] border-t border-[rgb(var(--border))]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -100,10 +100,10 @@ export default function DashboardPage() {
                 />
             </StatsGrid>
 
-            {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-3 gap-6">
+            {/* Main Content Grid - 50/50 split */}
+            <div className="grid lg:grid-cols-2 gap-6">
                 {/* Jobs Section */}
-                <div className="lg:col-span-2">
+                <div>
                     <Card variant="glass" padding="none">
                         <CardHeader className="p-6 pb-0">
                             <div className="flex items-center justify-between">
@@ -141,7 +141,7 @@ export default function DashboardPage() {
                                             </Link>
                                         </div>
                                     ) : (
-                                        <div className="space-y-4">
+                                        <div className="flex flex-col gap-4">
                                             {activeJobs.slice(0, 3).map((job) => (
                                                 <JobCard key={job.id} job={job} variant="compact" />
                                             ))}
@@ -150,7 +150,7 @@ export default function DashboardPage() {
                                 </TabsContent>
 
                                 <TabsContent value="completed">
-                                    <div className="space-y-4">
+                                    <div className="flex flex-col gap-4">
                                         {userJobs
                                             .filter((j) => j.status === 'completed')
                                             .slice(0, 3)
@@ -161,7 +161,7 @@ export default function DashboardPage() {
                                 </TabsContent>
 
                                 <TabsContent value="all">
-                                    <div className="space-y-4">
+                                    <div className="flex flex-col gap-4">
                                         {userJobs.slice(0, 3).map((job) => (
                                             <JobCard key={job.id} job={job} variant="compact" />
                                         ))}
@@ -185,7 +185,7 @@ export default function DashboardPage() {
                                 </Link>
                             </div>
                         </CardHeader>
-                        <CardContent className="p-6">
+                        <CardContent className="p-6 min-h-[400px]">
                             <TransactionList transactions={recentTransactions} limit={5} />
                         </CardContent>
                     </Card>

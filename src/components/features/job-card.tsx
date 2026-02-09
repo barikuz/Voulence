@@ -28,7 +28,7 @@ export function JobCard({ job, variant = 'default' }: JobCardProps) {
 
     if (variant === 'compact') {
         return (
-            <Link href={`/jobs/${job.id}`}>
+            <Link href={`/jobs/${job.id}`} className="block">
                 <Card
                     variant="default"
                     hoverable
