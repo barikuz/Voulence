@@ -146,19 +146,16 @@ export default function JobsPage() {
                             options={categories}
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-44"
                         />
                         <Select
                             options={budgetRanges}
                             value={budgetRange}
                             onChange={(e) => setBudgetRange(e.target.value)}
-                            className="w-44"
                         />
                         <Select
                             options={sortOptions}
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="w-44"
                         />
                     </div>
 

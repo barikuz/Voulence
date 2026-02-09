@@ -39,7 +39,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
         const baseStyles = `
-      w-full h-12 px-4 pr-10
+      h-12 px-4
       rounded-xl
       text-[rgb(var(--foreground))]
       appearance-none
@@ -69,7 +69,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         const iconPadding = leftIcon ? 'pl-12' : '';
 
         return (
-            <div className="w-full space-y-2">
+            <div className="inline-block space-y-2">
                 {label && (
                     <label
                         htmlFor={inputId}
@@ -78,7 +78,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                         {label}
                     </label>
                 )}
-                <div className="relative">
+                <div className="inline-flex items-center relative">
                     {leftIcon && (
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgb(var(--muted-foreground))] pointer-events-none">
                             {leftIcon}
@@ -92,6 +92,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                             variants[variant],
                             errorStyles,
                             iconPadding,
+                            'pr-8',
                             className
                         )}
                         {...props}
@@ -111,7 +112,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                             </option>
                         ))}
                     </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(var(--muted-foreground))] pointer-events-none" />
+                    <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-[rgb(var(--muted-foreground))] pointer-events-none" />
                 </div>
                 {error && (
                     <p className="text-sm text-[rgb(var(--destructive))]">{error}</p>

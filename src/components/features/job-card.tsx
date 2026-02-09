@@ -5,7 +5,7 @@ import { Clock, DollarSign, Users, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
-import { cn, formatCurrency, formatRelativeTime } from '@/lib/utils';
+import { cn, formatCurrency, formatRelativeTime, truncateText } from '@/lib/utils';
 import { Job, JobStatus } from '@/types';
 
 interface JobCardProps {
@@ -75,7 +75,7 @@ export function JobCard({ job, variant = 'default' }: JobCardProps) {
 
                 {/* Description */}
                 <p className="text-sm text-[rgb(var(--muted-foreground))] line-clamp-2 mb-4 flex-1">
-                    {job.description}
+                    {truncateText(job.description, 130)}
                 </p>
 
                 {/* Skills */}
