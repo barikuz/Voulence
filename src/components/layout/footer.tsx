@@ -10,8 +10,6 @@ const footerLinks = {
     ],
     company: [
         { name: 'About Us', href: '/about' },
-        { name: 'Careers', href: '/careers' },
-        { name: 'Blog', href: '/blog' },
         { name: 'Contact', href: '/contact' },
     ],
     legal: [
@@ -22,8 +20,6 @@ const footerLinks = {
     ],
     support: [
         { name: 'Help Center', href: '/help' },
-        { name: 'Documentation', href: '/docs' },
-        { name: 'API Reference', href: '/api' },
         { name: 'Status', href: '/status' },
     ],
 };

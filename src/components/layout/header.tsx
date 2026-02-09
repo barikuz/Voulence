@@ -14,6 +14,9 @@ import {
     LogOut,
     User,
     Settings,
+    Home,
+    Briefcase,
+    LayoutDashboard,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -25,9 +28,9 @@ import { truncateAddress } from '@/lib/utils';
 import { WalletModal } from '@/components/wallet/wallet-modal';
 
 const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Jobs', href: '/jobs' },
-    { name: 'Dashboard', href: '/dashboard' },
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'Jobs', href: '/jobs', icon: Briefcase },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
 ];
 
 export function Header() {
@@ -43,11 +46,11 @@ export function Header() {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-40 glass border-b border-[rgb(var(--border))]">
+        <header className="fixed top-0 left-0 right-0 z-40 bg-[rgb(var(--background))] border-b border-[rgb(var(--border))]">
             <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center">
                         <Link href="/" className="flex items-center gap-2">
                             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center neon-glow">
                                 <span className="text-white font-bold text-lg">V</span>
@@ -56,46 +59,33 @@ export function Header() {
                                 Voulence
                             </span>
                         </Link>
+                    </div>
 
+                    {/* Right Side: Navigation + Wallet + Theme (Desktop) */}
+                    <div className="hidden md:flex items-center gap-3">
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-1">
+                        <div className="flex items-center gap-1 mr-4">
                             {navigation.map((item) => {
                                 const isActive = pathname === item.href ||
                                     (item.href !== '/' && pathname.startsWith(item.href));
+                                const Icon = item.icon;
                                 return (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         className={cn(
-                                            'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                                            'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
                                             isActive
                                                 ? 'bg-primary-500/10 text-primary-500'
                                                 : 'text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] hover:bg-[rgb(var(--secondary))]'
                                         )}
                                     >
+                                        <Icon className="h-4 w-4" />
                                         {item.name}
                                     </Link>
                                 );
                             })}
                         </div>
-                    </div>
-
-                    {/* Right Side Actions */}
-                    <div className="flex items-center gap-3">
-                        {/* Theme Toggle */}
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={toggleTheme}
-                            className="h-10 w-10 p-0 rounded-full"
-                            aria-label="Toggle theme"
-                        >
-                            {resolvedTheme === 'dark' ? (
-                                <Sun className="h-5 w-5" />
-                            ) : (
-                                <Moon className="h-5 w-5" />
-                            )}
-                        </Button>
 
                         {/* Notifications */}
                         {isConnected && (
@@ -115,7 +105,7 @@ export function Header() {
                             <div className="relative">
                                 <button
                                     onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                                    className="flex items-center gap-3 px-3 py-1.5 rounded-full glass hover:bg-primary-500/10 transition-colors"
+                                    className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-[rgb(var(--secondary))] hover:bg-primary-500/10 transition-colors"
                                 >
                                     <Avatar
                                         src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex"
@@ -140,7 +130,7 @@ export function Header() {
                                             className="fixed inset-0 z-40"
                                             onClick={() => setProfileMenuOpen(false)}
                                         />
-                                        <div className="absolute right-0 mt-2 w-56 rounded-xl glass border border-[rgb(var(--border))] shadow-xl z-50 py-2">
+                                        <div className="absolute right-0 mt-2 w-56 rounded-xl bg-[rgb(var(--card))] border border-[rgb(var(--border))] shadow-xl z-50 py-2">
                                             <Link
                                                 href="/profile"
                                                 className="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-500/10 transition-colors"
@@ -179,16 +169,60 @@ export function Header() {
                                 onClick={() => setWalletModalOpen(true)}
                                 leftIcon={<Wallet className="h-4 w-4" />}
                             >
-                                <span className="hidden sm:inline">Connect Wallet</span>
-                                <span className="sm:hidden">Connect</span>
+                                Connect Wallet
                             </Button>
                         )}
+
+                        {/* Theme Toggle - Far Right */}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={toggleTheme}
+                            className="h-10 w-10 p-0 rounded-full"
+                            aria-label="Toggle theme"
+                        >
+                            {resolvedTheme === 'dark' ? (
+                                <Sun className="h-5 w-5" />
+                            ) : (
+                                <Moon className="h-5 w-5" />
+                            )}
+                        </Button>
+                    </div>
+
+                    {/* Mobile: Wallet + Theme + Menu Toggle */}
+                    <div className="flex md:hidden items-center gap-2">
+                        {/* Wallet Button (Mobile) */}
+                        {!isConnected && (
+                            <Button
+                                variant="neon"
+                                size="sm"
+                                onClick={() => setWalletModalOpen(true)}
+                                leftIcon={<Wallet className="h-4 w-4" />}
+                            >
+                                Connect
+                            </Button>
+                        )}
+
+                        {/* Theme Toggle (Mobile) */}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={toggleTheme}
+                            className="h-10 w-10 p-0 rounded-full"
+                            aria-label="Toggle theme"
+                        >
+                            {resolvedTheme === 'dark' ? (
+                                <Sun className="h-5 w-5" />
+                            ) : (
+                                <Moon className="h-5 w-5" />
+                            )}
+                        </Button>
 
                         {/* Mobile Menu Toggle */}
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="h-10 w-10 p-0 rounded-full md:hidden"
+                            className="h-10 w-10 p-0 rounded-full"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             aria-label="Toggle menu"
                         >
@@ -208,18 +242,20 @@ export function Header() {
                             {navigation.map((item) => {
                                 const isActive = pathname === item.href ||
                                     (item.href !== '/' && pathname.startsWith(item.href));
+                                const Icon = item.icon;
                                 return (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={cn(
-                                            'px-4 py-3 rounded-lg text-sm font-medium transition-colors',
+                                            'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors',
                                             isActive
                                                 ? 'bg-primary-500/10 text-primary-500'
                                                 : 'text-[rgb(var(--muted-foreground))]'
                                         )}
                                     >
+                                        <Icon className="h-5 w-5" />
                                         {item.name}
                                     </Link>
                                 );
